@@ -1,0 +1,60 @@
+AIM: To subtract two 8bit number by using 8085 simulator
+
+Program:
+
+LXI H, C050H
+MOV A, M
+INX H
+SUB M
+STA C000H
+HLT			
+
+Initially: C050 -- 0DH
+		C051 -- 02H
+
+Program is written the RAM and it is a volatile memory.
+
+
+MVI C, 00H
+LDA 4300H
+MOV B, A
+LDA 4301H
+SUB B
+JNC Loop
+CMA
+INR A
+INR C
+Loop: STA 4302H
+MOV A, C
+STA 4303H
+HLT
+
+Initially:- 4300 -- 15H
+		 4301 -- 13H
+--> CMA: Complement of Accumulator.
+
+Aim: To subtract two 16 bit numbers.
+
+LHLD 2000H
+XCHG
+LHLD 2003H
+MOV A, E
+SUB L
+MOV E, A
+MOV A, D
+SBB H
+MOV D, A
+MVI B, 00H
+JNC Loop
+INR B
+Loop: XCHG
+SHLD 2006H
+MOV A, B
+STA 2008H
+HLT
+
+
+Initially: 2000 -- 01
+		2001 -- 02
+		2003 -- 07
+		2004 -- 05

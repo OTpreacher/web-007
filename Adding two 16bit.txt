@@ -1,0 +1,20 @@
+Aim: To add two 16 bit numbers using 8085 microprocessor simulator.
+
+--> Lower order byte will be stored in the lower memory address.
+
+
+LHLD 2050H
+XCHG
+LHLD 2052H
+MVI C, 00H
+DAD D
+JNC Loop
+INR C
+Loop: MOV A, C
+STA 2055H
+SHLD 2056H
+HLT
+
+
+LHLD 16 bit address: It loads the data stored in the denoted address into the HL pair.
+XCHG: Exchange the content of HL pair with the DE pair.

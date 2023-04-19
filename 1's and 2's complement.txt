@@ -1,0 +1,44 @@
+Aim: Write a program for 1's complement of 8-bit number.
+
+LDA C050H
+CMA						Initially: C050H --> AEH
+STA C051H
+HLT
+
+
+Aim: Write a program for 2's complement of 8-bit number.
+
+LDA C050H
+CMA
+INR A						Initially: C050H --> AEH
+STA C051H
+HLT
+
+Aim: Write a program for 1's complment of 16-bit number.
+
+LXI H, C050H
+MOV A, M
+CMA
+STA C052H					Initially: C050H --> 26H
+INX H							     C051H --> 25H	
+MOV A, M
+CMA 
+STA C053H
+HLT
+
+Aim Write a program for 2's complement for 16-bit number.
+
+LXI H, C050H
+MVI B, 00H
+MOV A, M
+CMA 
+ADI 01H
+STA C052H
+JNC Loop
+INR B
+Loop: LXI H, C051H
+MOV A, M
+CMA
+ADD B
+STA C053H
+HLT

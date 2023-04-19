@@ -1,0 +1,42 @@
+AIM: Write a assembly language program to convert binary code decimal(BCD) to hexa-decimal.
+
+LDA D050H
+MOV B, A
+ANI 0FH
+MOV C, A
+MOV A, B
+ANI F0H
+RRC												D050H --> 35H
+RRC
+RRC
+RRC
+MOV D, A
+MVI E, 0AH
+XRA A
+Loop: ADD D
+DCR E
+JNZ Loop
+ADD C
+STA D052H
+HLT
+
+
+
+AIM: Write a program to sort out an array in ascending order.
+
+LXI H, 204FH
+MOV B, M
+DCR B
+INX H
+BACK: MOV A, M
+INX H
+CMP M
+JC FWD														204F --> 03
+MOV C, M														2050 --> 02
+MOV M, A														2051 --> 08
+DCX H															2052 --> 04
+MOV M, C
+INX H
+FWD: DCR B
+JNZ BACK
+HLT

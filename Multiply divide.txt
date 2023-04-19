@@ -1,0 +1,33 @@
+Aim: To multiply 2 8-bit numbers.
+
+LXI H, C050H
+MOV B, M
+MVI A, 00H
+INX H
+MOV C, M
+Loop2: ADD B
+JNC Loop
+INR D													Initially: C050 -- 0AH and C051 -- 02H
+Loop: DCR C
+JNZ Loop2
+STA C052H
+MOV A, D
+STA C053H
+HLT
+
+Aim: To divide two 8 bit numbers.
+
+LXI H, C050H
+MOV B, M
+INX H
+MOV C, M
+MVI D, 00H
+MOV A, B
+Loop: SUB C
+INR D
+CMP C
+JNC Loop
+STA C053H
+MOV A, D
+STA C052H
+HLT 

@@ -1,0 +1,32 @@
+Aim: To add two 8 bit data by using online microprocessor simulator kit.
+Apparatus: 
+
+Program:
+
+MVI B, 02H		--2 byte
+MVI C, 04H		-- 2 byte
+MOV A, B		-- 1 byte
+ADD C		-- 1 byte
+STA A000H		-- 3 byte
+HLT
+
+In Hex left side is higher order byte and right side is lower order byte.
+
+LXI H, 2500H
+MOV A, M
+INX H
+ADD M
+INX H							In the memory initialy: 2500H - FE and 2501 - 01
+MOV M, A
+MVI A, 00
+ADC A
+INX H
+MOV M, A
+HLT
+
+--> INX increments the HL pair similar to INR
+-->  ADC is adding carry to the accumulator
+
+Result:
+
+
