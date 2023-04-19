@@ -1,0 +1,57 @@
+AIM: Write a assembly language program to check whether a givern number is odd parity or even parity.
+
+--> how to make accumulator zero
+	1) MVI A, 00H
+	2) XRA A
+	3) LXI H, C050H			CO50H --> 00H
+	   MOV A, M
+
+XRA A
+MVI B, 32H
+MVI C, 00H
+ADD B
+JPO Loop
+INR C
+Loop: MOV A, C
+STA C050H
+HLT
+
+JPO: Jump during odd parity.
+
+If 00H --> Odd parity
+   01H --> Even parity
+
+
+AIM: Write a program to find the largest number from a data array.
+Store numbers in consequtive memory locations from C051H
+
+LXI H, C050H
+MOV C, M
+INX H
+DCR C
+MOV A, M									C050H -- Number of elements
+Skip: INX H									C051H -- the numbers
+CMP M
+JNC Loop
+MOV A, M
+Loop: DCR C
+JNZ Skip
+STA C000H
+HLT
+
+
+Find smallest number
+
+LXI H,5000
+MOV B,M
+INX H
+MOV A,M
+DCR B
+LOOP: INX H
+CMP M
+JC SKIP
+MOV A,M
+SKIP: DCR B
+JNZ LOOP
+STA 5006
+

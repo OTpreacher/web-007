@@ -1,0 +1,309 @@
+Aim:- To add two 8 bit data by using inline up 8085 simulator kit with carry and without carry.
+-------------------------------------------------------------
+MVI B,02H
+MVI C,04H
+MOV A,B
+ADD C
+STA A000H
+hlt
+--------------------------------------------------------------
+LXI H,2500H
+MOV A,M
+INX H
+ADD M
+INX H
+MOV M,A
+MVI A,00
+ADC A
+INX H
+MOV M,A
+HLT
+------------------------------------------------------------------------
+
+
+Aim :- To add two 16 bit numbers by using 8085 online simulator.
+LHLD 2050H
+XCHG 
+LHLD 2052H
+MVI C, 00H
+DAD D
+JNC Loop
+INR C
+Loop: MOV A , C
+STA 2055H
+SHLD 2056H
+HLT
+------------------------------------------------------------------------
+
+
+Aim :- To subtract two 8 bits numbers by using online simulator 8085 tools.
+LXI H,C050H
+MOV A,M
+INX H
+SUB M
+STA C000H
+HLT
+-------------------------------------------------------------------------
+MVI C,00H
+LDA 4300H
+MOV B,A
+LDA 4301H
+SUB B
+JNC LOOP
+CMA
+INR A
+INR C
+LOOP: STA 4302H
+MOV A,C
+STA 4303H
+HLT
+------------------------------------------------------------------
+
+
+Aim :- To subtract two 16 bits numbers by using online simulator 8085 tools.
+LHLD 2000H
+XCHG
+LHLD 2002H
+MOV A,E
+SUB L
+MOV E,A
+MOV A,D
+SBB H
+JNC LOOP
+INR B
+LOOP: MOV D,A
+XCHG 
+SHLD 2004H
+MOV A,B
+STA 2006H
+HLT
+------------------------------------------------------------------
+
+
+WAP to multiply two 8 bits 2 byte numbers by using online 8085 simulator.
+LXI H,2050H
+MOV B,M
+MVI A,00H
+INX H
+MOV C,M
+Loop2: ADD B
+JNC Loop
+INR D
+Loop: DCR C
+JNZ Loop2
+STA 2052H
+MOV A,D
+STA 2053H
+HLT
+---------------------------------------------------------------------
+
+
+WAP to divide two 8 bits 2 byte numbers by using online 8085 simulator.
+LXI H,2050H
+MOV B,M
+INX H
+MOV C,M
+MVI D,00H
+MOV A,B
+Loop: SUB C
+INR D
+CMP C
+JNC Loop
+STA 2053H
+MOV A,D
+STA 2052H
+HLT
+------------------------------------------------------------------------
+
+
+WAP to find 1's compliment of 8 bit number by using online simulator.
+LDA C050H
+CMA
+STA C051H
+HLT
+---------------------------------------------------------------------------------------------------
+
+
+WAP to find 2's compliment of 8 bit number by using online simulator.
+LDA C050H
+CMA
+INR A
+STA C051H
+HLT
+---------------------------------------------------------------------------------------------------
+
+
+WAP to find 1's compliment of 16 bit number by using online simulator.
+LXI H,C050H
+MOV A,M
+CMA 
+STA C052H
+INX H
+MOV A,M
+CMA
+STA C053H
+HLT
+---------------------------------------------------------------------------------------------------
+
+
+WAP to find 2's compliment of 16 bit number by using online simulator.
+LXI H,C050H
+MOV A,M
+MVI C,00H
+CMA 
+ADI 01H
+STA C052H
+INX H
+JNC Loop
+INR C
+Loop:LXI H,C051H
+MOV A,M
+CMA
+ADD C
+STA C053H
+HLT
+--------------------------------------------------------------------------------------
+
+
+Write an assembly lamguage program to check whether a given number is odd parity or even parity.
+
+XRA A
+MVI B,32H
+MVI C,00H
+ADD B
+JPO Loop
+INR C
+Loop: MOV A,C
+STA C050H
+HLT
+---------------------------------------------------------------------------------
+
+
+Write an assembly language program to find out the largest data from a data array.
+LXI H,C050H
+MOV C,M
+INX H
+DCR C
+MOV A,M
+Skip: INX H
+CMP M
+JNC Loop
+MOV A,M
+Loop: DCR C
+JNZ Skip
+STA C000H
+HLT
+
+06 0A 1E 1F 47 9E 05
+Ans 9E
+
+-----------------------------------------------------------------------------------------
+
+
+Find smallest number
+
+LXI H,5000
+MOV B,M
+INX H
+MOV A,M
+DCR B
+LOOP: INX H
+CMP M
+JC SKIP
+MOV A,M
+SKIP: DCR B
+JNZ LOOP
+STA 5006
+HTL
+---------------------------------------------------------------------------------------------
+AIM: Write a assembly language program to convert binary code decimal(BCD) to hexa-decimal.
+
+LDA D050H
+MOV B, A
+ANI 0FH
+MOV C, A
+MOV A, B
+ANI F0H
+RRC												D050H --> 35H
+RRC
+RRC
+RRC
+MOV D, A
+MVI E, 0AH
+XRA A
+Loop: ADD D
+DCR E
+JNZ Loop
+ADD C
+STA D052H
+HLT
+
+----------------------------------------------------------------------------------------
+Hex to Bcd
+
+LXI H,5000
+MVI D,00
+XRA A
+MOV C,M
+LOOP2: ADI 01
+DAA
+JNC LOOP1
+INR D
+LOOP1: DCR C
+JNZ LOOP2
+STA 5001
+MOV A,D
+STA 5002
+HLT
+
+
+------------------------------------------------------------------------------------------
+
+AIM: Write a program to sort out an array in ascending order.
+
+LXI H, 204FH
+MOV B, M
+DCR B
+INX H
+BACK: MOV A, M
+INX H
+CMP M
+JC FWD														204F --> 03
+MOV C, M														2050 --> 02
+MOV M, A														2051 --> 08
+DCX H															2052 --> 04
+MOV M, C
+INX H
+FWD: DCR B
+JNZ BACK
+HLT
+
+-----------------------------------------------------------------------------------------------
+
+
+Descending Order
+
+LXI H,5000
+MOV C,M
+DCR C
+REPEAT: MOV D,C
+LXI H,5001
+LOOP: MOV A,M
+INX H
+CMP M
+JNC SKIP
+MOV B,M
+MOV M,A
+DCX H
+MOV M,B
+INX H
+SKIP: DCR D
+JNZ LOOP
+DCR C
+JNZ REPEAT
+HLT
+
+
+--------------------------------------------------------------------------------------------
+
+
